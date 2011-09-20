@@ -749,7 +749,7 @@ RING_IO_WriterClient1 (IN Void * ptr)
 		RING_IO_1Print ("RingIO_open1 () Writer failed. Status = [0x%x]\n",
 				status);
 	}
-	RING_IO_0Print ("RingIO_open1 () Writer  \n");
+	//RING_IO_0Print ("RingIO_open1 () Writer  \n");
 
 	if (DSP_SUCCEEDED (status)) {
 		/* Create the semaphore to be used for notification */
@@ -761,7 +761,7 @@ RING_IO_WriterClient1 (IN Void * ptr)
 		}
 	}
 
-	RING_IO_0Print ("RING_IO_CreateSem1 () Writer SEM   \n");
+	//RING_IO_0Print ("RING_IO_CreateSem1 () Writer SEM   \n");
 
 	if (DSP_SUCCEEDED (status)) {
 		/*
@@ -782,7 +782,7 @@ RING_IO_WriterClient1 (IN Void * ptr)
 
 	}
 
-	RING_IO_0Print (" RingIO_setNotifier1 () Writer SEM   \n");
+	//RING_IO_0Print (" RingIO_setNotifier1 () Writer SEM   \n");
 	////////////////////////////////////////////////////////////////////////////////
 	//end  initial the write task
 	////////////////////////////////////////////////////////////////////////////////
@@ -820,7 +820,7 @@ RING_IO_WriterClient1 (IN Void * ptr)
 				status);
 	}
 
-	RING_IO_0Print (" RING_IO_CreateSem1 () Reader SEM  \n");
+	//RING_IO_0Print (" RING_IO_CreateSem1 () Reader SEM  \n");
 
 	if (DSP_SUCCEEDED(status)) {
 		do {
@@ -842,7 +842,7 @@ RING_IO_WriterClient1 (IN Void * ptr)
 		}while (DSP_FAILED (status));
 	}
 
-	RING_IO_0Print (" RingIO_setNotifier1 Reader SEM  \n");
+	//RING_IO_0Print (" RingIO_setNotifier1 Reader SEM  \n");
 	RING_IO_0Print ("End initial the read  task1 \n");
 
 	////////////////////////////////////////////////////////////////////////////////
@@ -1422,7 +1422,7 @@ RING_IO_WriterClient2 (IN Void * ptr)
 				status);
 	}
 
-	RING_IO_0Print ("RingIO_open2 () Writer\n");
+	//RING_IO_0Print ("RingIO_open2 () Writer\n");
 
 	if (DSP_SUCCEEDED (status)) {
 		/* Create the semaphore to be used for notification */
@@ -1434,7 +1434,7 @@ RING_IO_WriterClient2 (IN Void * ptr)
 		}
 	}
 
-	RING_IO_0Print ("RING_IO_CreateSem2 () Writer SEM \n");
+	//RING_IO_0Print ("RING_IO_CreateSem2 () Writer SEM \n");
 
 	if (DSP_SUCCEEDED (status)) {
 		/*
@@ -1454,7 +1454,7 @@ RING_IO_WriterClient2 (IN Void * ptr)
 
 	}
 
-	RING_IO_0Print ("RingIO_setNotifier2 () Writer SEM \n");
+	//RING_IO_0Print ("RingIO_setNotifier2 () Writer SEM \n");
 	///////////////////////////////////////////////////////////////////////////////
 	//end  initial the write task
 	///////////////////////////////////////////////////////////////////////////////
@@ -1482,7 +1482,7 @@ RING_IO_WriterClient2 (IN Void * ptr)
 
 	}while (RingIOReaderHandle2 == NULL);
 
-	RING_IO_0Print (" RingIO_open (RingIOReaderName2,  \n");
+	//RING_IO_0Print (" RingIO_open (RingIOReaderName2,  \n");
 
 	/* Create the semaphore to be used for notification */
 	status = RING_IO_CreateSem (&semPtrReader);
@@ -1491,7 +1491,7 @@ RING_IO_WriterClient2 (IN Void * ptr)
 				"Status = [0x%x]\n",
 				status);
 	}
-	RING_IO_0Print (" RING_IO_CreateSem2 () Reader SEM   \n");
+	//RING_IO_0Print (" RING_IO_CreateSem2 () Reader SEM   \n");
 
 	if (DSP_SUCCEEDED(status)) {
 		do {
@@ -1513,7 +1513,7 @@ RING_IO_WriterClient2 (IN Void * ptr)
 		}while (DSP_FAILED (status));
 	}
 
-	RING_IO_0Print (" RingIO_setNotifier (RingIOReaderHandle2 reader \n");
+	//RING_IO_0Print (" RingIO_setNotifier (RingIOReaderHandle2 reader \n");
 	RING_IO_0Print ("End initial the read  task2 \n");
 
 	///////////////////////////////////////////////////////////////////////////////
@@ -1523,10 +1523,15 @@ RING_IO_WriterClient2 (IN Void * ptr)
 
 	while(1) {
 
-		RING_IO_0Print ("2222 sleep 1s and run \n");
+		
 		RING_IO_Sleep(1000000);
-		if(Task_Run == FALSE)
-		break;
+		RING_IO_0Print ("2222 sleep 1s and run \n");
+		if(Task_Run == FALSE){
+			RING_IO_0Print ("!!! WriteTask2 exit \n");
+
+			break;
+		}
+				
 
 		///////////////////////////////////////////////////////////////////////////////
 		//the execute of write task
