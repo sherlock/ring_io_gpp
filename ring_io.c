@@ -169,7 +169,7 @@ extern "C" {
  *          validation against the input buffer received.
  *  ============================================================================
  */
-#define XFER_VALUE              128u
+#define XFER_VALUE              5u
 
 /*  ============================================================================
  *  @name   OP_FACTOR
