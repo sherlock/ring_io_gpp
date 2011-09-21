@@ -810,7 +810,7 @@ RING_IO_WriterClient1 (IN Void * ptr)
 
 	}while (RingIOReaderHandle1 == NULL);
 
-	RING_IO_0Print (" RingIO_open (RingIOReaderName1  ()\n");
+//	RING_IO_0Print (" RingIO_open (RingIOReaderName1  ()\n");
 
 	/* Create the semaphore to be used for notification */
 	status = RING_IO_CreateSem (&semPtrReader);
@@ -1284,11 +1284,14 @@ RING_IO_WriterClient1 (IN Void * ptr)
 						status);
 			}
 		}
-		else {
-			totalRcvbytes = 0;
-			rcvSize = RING_IO_BufferSize1;
-			fReaderEnd1 = FALSE;
-		}
+		//else {
+			
+		//}
+		totalRcvbytes = 0;
+		rcvSize = RING_IO_BufferSize1;
+		fReaderEnd1 = FALSE;
+		exitFlag = FALSE;
+		RING_IO_0Print ("End Reader Task1  () \n");
 
 		////////////////////////////////////////////////////////////////////////////////
 		//End the execute of read task
@@ -1961,13 +1964,15 @@ RING_IO_WriterClient2 (IN Void * ptr)
 						status);
 			}
 		}
-		else {
-			totalRcvbytes = 0;
-			rcvSize = RING_IO_BufferSize3;
-			fReaderEnd2 = FALSE;
-		}
+		//else {
+			
+		//}
+		totalRcvbytes = 0;
+		rcvSize = RING_IO_BufferSize3;
+		fReaderEnd2 = FALSE;
+		exitFlag = FALSE;
 
-		RING_IO_0Print (" RING_IO_WaitSem2 () Reader SEM  \n");
+		RING_IO_0Print (" End Reader task2  \n");
 
 	}
 
