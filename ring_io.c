@@ -937,6 +937,18 @@ RING_IO_WriterClient1 (IN Void * ptr)
 					if ((DSP_SUCCEEDED (status)) && (acqSize > 0)) {
 						RING_IO_InitBuffer (bufPtr, acqSize);
 
+						//debug
+						Uint8 *ptr8 = (Uint8 *)(bufPtr);
+						for (i = 0;i < 5; i++) {
+								RING_IO_1Print ("    Send [0x%x]  ", *(ptr8+i));
+							}
+						RING_IO_0Print ("\n");
+
+
+
+
+						
+
 						if ( (RING_IO_BytesToTransfer1 != 0)
 								&& ( (bytesTransfered + acqSize)
 										> RING_IO_BytesToTransfer1)) {
@@ -1527,8 +1539,8 @@ RING_IO_WriterClient2 (IN Void * ptr)
 	while(1) {
 
 		
-		RING_IO_Sleep(1000000);
-		RING_IO_0Print ("2222 sleep 1s and run \n");
+		RING_IO_Sleep(5000000);
+		RING_IO_0Print ("2222 sleep 5s and run \n");
 		if(Task_Run == FALSE){
 			RING_IO_0Print ("!!! WriteTask2 exit \n");
 
@@ -1615,6 +1627,17 @@ RING_IO_WriterClient2 (IN Void * ptr)
 					 */
 					if ((DSP_SUCCEEDED (status)) && (acqSize > 0)) {
 						RING_IO_InitBuffer (bufPtr, acqSize);
+
+						//debug
+						Uint8 *ptr8 = (Uint8 *)(bufPtr);
+						for (i = 0;i < 5; i++) {
+								RING_IO_1Print ("    Send [0x%x]  ", *(ptr8+i));
+							}
+						RING_IO_0Print ("\n");
+
+
+
+						
 
 						if ( (RING_IO_BytesToTransfer2 != 0)
 								&& ( (bytesTransfered + acqSize)
@@ -2783,6 +2806,7 @@ Void RING_IO_Delete(Uint8 processorId) {
 
 		if (DSP_FAILED(tmpStatus)) {
 			status = tmpStatus;
+			RING_IO_0Print("RingIO_delete (RingIOWriterName1)\n");
 			RING_IO_Sleep(10);
 		} else {
 			status = RINGIO_SUCCESS;
@@ -3274,24 +3298,29 @@ RING_IO_Reader_Notify2 (IN RingIO_Handle handle,
 		IN RingIO_NotifyMsg msg)
 {
 	DSP_STATUS status = DSP_SOK;
+	RING_IO_1Print ("###RING_IO_Reader_Notify2. (msg) = %d\n",
+				msg);
 
 	switch(msg) {
 		case NOTIFY_DATA_START:
 		fReaderStart2 = TRUE;
 		RING_IO_0Print (" RING_IO_Reader_Notify2 Start Scuccess \n");
+		/* Post the semaphore. */
+		status = RING_IO_PostSem ((Pvoid) param);
 		break;
 
 		case NOTIFY_DATA_END:
 		fReaderEnd2 = TRUE;
 		RING_IO_0Print (" RING_IO_Reader_Notify2 End Scuccess \n");
+		/* Post the semaphore. */
+		status = RING_IO_PostSem ((Pvoid) param);
 		break;
 
 		default:
 		break;
 	}
 
-	/* Post the semaphore. */
-	status = RING_IO_PostSem ((Pvoid) param);
+	
 	if (DSP_FAILED (status)) {
 		RING_IO_1Print ("RING_IO_PostSem () failed. Status = [0x%x]\n",
 				status);
