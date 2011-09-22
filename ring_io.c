@@ -1333,6 +1333,23 @@ RING_IO_WriterClient1 (IN Void * ptr)
 		////////////////////////////////////////////////////////////////////////////////
 	}
 
+
+
+
+	do {
+	tmpStatus = RingIO_sendNotify (RingIOWriterHandle1,
+						(RingIO_NotifyMsg)NOTIFY_DSP_END);
+	if (DSP_FAILED(tmpStatus)) {
+			status = tmpStatus;
+			RING_IO_0Print("RingIO_sendNotify (RingIOWriterHandle1)\n");
+			RING_IO_Sleep(10);
+		} else {
+			status = RINGIO_SUCCESS;
+		}
+	} while (DSP_FAILED(tmpStatus));
+
+
+
 	////////////////////////////////////////////////////////////////////////////////
 	//close  the write  task
 	////////////////////////////////////////////////////////////////////////////////
@@ -1348,7 +1365,7 @@ RING_IO_WriterClient1 (IN Void * ptr)
 		}
 	}
 
-	RING_IO_0Print ("RING_IO_DeleteSem1 () Writer SEM  \n");
+	//RING_IO_0Print ("RING_IO_DeleteSem1 () Writer SEM  \n");
 
 	/*
 	 *  Close the RingIO to be used with GPP as the writer.
@@ -1384,7 +1401,7 @@ RING_IO_WriterClient1 (IN Void * ptr)
 					status);
 		}
 	}
-	RING_IO_0Print (" RING_IO_DeleteSem1 () Reader SEM   \n");
+	//RING_IO_0Print (" RING_IO_DeleteSem1 () Reader SEM   \n");
 
 	/*
 	 *  Close the RingIO to be used with GPP as the reader.
@@ -2026,6 +2043,18 @@ RING_IO_WriterClient2 (IN Void * ptr)
 	//close  the write  task	
 	///////////////////////////////////////////////////////////////////////////////
 
+	do {
+	tmpStatus = RingIO_sendNotify (RingIOWriterHandle2,
+						(RingIO_NotifyMsg)NOTIFY_DSP_END);
+	if (DSP_FAILED(tmpStatus)) {
+			status = tmpStatus;
+			RING_IO_0Print("RingIO_sendNotify (RingIOWriterHandle2)\n");
+			RING_IO_Sleep(10);
+		} else {
+			status = RINGIO_SUCCESS;
+		}
+	} while (DSP_FAILED(tmpStatus));
+
 
 	/* Delete the semaphore used for notification */
 	if (semPtrWriter != NULL) {
@@ -2038,7 +2067,7 @@ RING_IO_WriterClient2 (IN Void * ptr)
 		}
 	}
 
-	RING_IO_0Print ("RING_IO_DeleteSem2 () Writer SEM \n");
+	//RING_IO_0Print ("RING_IO_DeleteSem2 () Writer SEM \n");
 
 	/*
 	 *  Close the RingIO to be used with GPP as the writer.
@@ -2076,7 +2105,7 @@ RING_IO_WriterClient2 (IN Void * ptr)
 		}
 	}
 
-	RING_IO_0Print ("RING_IO_DeleteSem2 () Reader SEM  \n");
+	//RING_IO_0Print ("RING_IO_DeleteSem2 () Reader SEM  \n");
 
 	if (RingIOReaderHandle2 != NULL) {
 		tmpStatus = RingIO_close (RingIOReaderHandle2);
@@ -2820,10 +2849,7 @@ Void RING_IO_Delete(Uint8 processorId) {
 
 
 
-	RingIO_sendNotify (RingIOWriterHandle1,
-						(RingIO_NotifyMsg)NOTIFY_DSP_END);
-	RingIO_sendNotify (RingIOWriterHandle2,
-						(RingIO_NotifyMsg)NOTIFY_DSP_END);
+
 /*	if (DSP_FAILED(status)) {
 			
 			RING_IO_Sleep(10);
