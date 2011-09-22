@@ -231,6 +231,29 @@ extern "C" {
  */
 #define NOTIFY_DATA_END         4u
 
+
+
+/*  ============================================================================
+ *  @const   RINGIO_DSP_END
+ *
+ *  @desc     Fixed attribute type indicates  end of the dsp 
+ *  ============================================================================
+ */
+#define RINGIO_DSP_END         5u
+
+
+/*  ============================================================================
+ *  @const   NOTIFY_DSP_END
+ *
+ *  @desc     Notification message  to  DSP.Indicates DSP end
+ *  ============================================================================
+ */
+#define NOTIFY_DSP_END         6u
+
+
+
+
+
 /*  ============================================================================
  *  @const   RING_IO_WRITER_BUF_SIZE
  *
@@ -2793,6 +2816,24 @@ Void RING_IO_Delete(Uint8 processorId) {
 	DSP_STATUS tmpStatus = DSP_SOK;
 
 	RING_IO_0Print("Entered RING_IO_Delete ()\n");
+
+
+
+
+	RingIO_sendNotify (RingIOWriterHandle1,
+						(RingIO_NotifyMsg)NOTIFY_DSP_END);
+	RingIO_sendNotify (RingIOWriterHandle2,
+						(RingIO_NotifyMsg)NOTIFY_DSP_END);
+/*	if (DSP_FAILED(status)) {
+			
+			RING_IO_Sleep(10);
+		}
+		else {
+			RING_IO_0Print ("GPP-->DSP2:Sent Data Transfer Start "
+							"Notification \n");
+	}*/
+
+	
 
 	/*
 	 *  Delete the sending RingIO to be used with GPP as the writer.
